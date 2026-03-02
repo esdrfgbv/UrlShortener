@@ -2,33 +2,20 @@ package com.example.url.model;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-
-@Entity
-public class Url {
-
-    @Id
-    @GeneratedValue
-    private Long id;
-
-    @Lob
-    private String originalUrl;
+public class UrlInfoResponseDto {
 
     private String shortLink;
-
+    private String originalUrl;
     private LocalDateTime creationDate;
-
     private LocalDateTime expirationDate;
+    private boolean expired;
 
-    public Long getId() {
-        return id;
+    public String getShortLink() {
+        return shortLink;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setShortLink(String shortLink) {
+        this.shortLink = shortLink;
     }
 
     public String getOriginalUrl() {
@@ -37,14 +24,6 @@ public class Url {
 
     public void setOriginalUrl(String originalUrl) {
         this.originalUrl = originalUrl;
-    }
-
-    public String getShortLink() {
-        return shortLink;
-    }
-
-    public void setShortLink(String shortLink) {
-        this.shortLink = shortLink;
     }
 
     public LocalDateTime getCreationDate() {
@@ -61,5 +40,13 @@ public class Url {
 
     public void setExpirationDate(LocalDateTime expirationDate) {
         this.expirationDate = expirationDate;
+    }
+
+    public boolean isExpired() {
+        return expired;
+    }
+
+    public void setExpired(boolean expired) {
+        this.expired = expired;
     }
 }
