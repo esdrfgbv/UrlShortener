@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -10,21 +11,23 @@
 <body>
 
     <div class="container">
+
         <h1>URL Shortener</h1>
 
         <input type="text" id="longUrl" placeholder="Enter your long URL">
 
-        <label class="label">Choose Expiration Date & Time</label>
-        <input type="datetime-local" id="expiry">
+        <label class="label">Choose Expiration Date & Time</label> <input type="datetime-local" id="expiry">
 
         <button onclick="shorten()">Generate Short Link</button>
 
         <div class="result" id="resultBox">
             <p>Your link will appear here</p>
         </div>
+
     </div>
 
     <script>
+
         async function shorten() {
 
             const longUrl = document.getElementById("longUrl").value.trim();
@@ -42,7 +45,8 @@
             }
 
             try {
-                const response = await fetch("http://localhost:8080/generate", {
+
+                const response = await fetch("/generate", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -58,23 +62,45 @@
                 console.log(data);
 
                 if (data.shortLink) {
-                    const fullUrl = "http://localhost:8080/" + data.shortLink;
+
+                    const fullUrl = window.location.origin + "/" + data.shortLink;
 
                     resultBox.innerHTML = `
-                <h3>Shortened URL</h3>
-                <a href="${fullUrl}" target="_blank">${fullUrl}</a>
-                <p>Expires on: ${data.expirationDate}</p>
-            `;
+<h3>Shortened URL</h3>
+<input type="text" value="${fullUrl}" id="shortUrl" readonly style="width:80%">
+<button onclick="copyLink()">Copy</button>
+<p>Expires on: ${data.expirationDate}</p>
+`;
+
                 } else {
+
                     resultBox.innerHTML =
                         `<p style="color:red;">${data.error}</p>`;
+
                 }
 
             } catch (err) {
+
                 resultBox.innerHTML =
                     "<p style='color:red;'>Server not reachable</p>";
+
             }
+
         }
+
+        function copyLink() {
+
+            const copyText = document.getElementById("shortUrl");
+
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+
+            navigator.clipboard.writeText(copyText.value);
+
+            alert("Link copied to clipboard");
+
+        }
+
     </script>
 
 </body>
