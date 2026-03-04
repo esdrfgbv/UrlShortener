@@ -57,7 +57,7 @@ public class UrlController {
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @GetMapping("/{shortLink}")
+    @GetMapping("/{shortLink:[a-zA-Z0-9]+}")
     public ResponseEntity<?> redirectToOriginalUrl(@PathVariable String shortLink, HttpServletResponse response)
             throws IOException {
 
@@ -86,7 +86,7 @@ public class UrlController {
         }
 
         response.sendRedirect(urlToRet.getOriginalUrl());
-        return null;
+        return ResponseEntity.status(HttpStatus.FOUND).build();
     }
 
     /**
