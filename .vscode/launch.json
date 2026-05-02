@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "UrlApplication",
+            "request": "launch",
+            "mainClass": "com.example.url.UrlApplication",
+            "projectName": "urlShorteningService"
+        },
+        {
+            "type": "java",
+            "name": "Run Spring Boot",
+            "request": "launch",
+            "mainClass": "com.example.url.UrlApplication",
+            "projectName": "url",
+            "vmArgs": "-Dspring.profiles.active=dev"
+        }
+    ]
+}

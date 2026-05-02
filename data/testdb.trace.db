@@ -1,0 +1,15 @@
+2026-02-27 00:55:54 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "TRUNCATE URL[*]"; expected "TABLE"; SQL statement:
+TRUNCATE URL [42001-200]
+2026-02-27 00:56:05 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "TRUNCATE URL[*]"; expected "TABLE"; SQL statement:
+TRUNCATE URL [42001-200]
+2026-02-27 00:56:14 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "TRUNCATE URL[*]"; expected "TABLE"; SQL statement:
+TRUNCATE URL [42001-200]
+2026-02-27 00:56:26 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "TRUNCATE URL[*]"; expected "TABLE"; SQL statement:
+TRUNCATE URL [42001-200]
+2026-02-27 00:56:36 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "URL[*]"; expected "UPDATE, USE"; SQL statement:
+URL [42001-200]
