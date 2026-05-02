@@ -1,5 +1,5 @@
 # Build stage
-FROM maven:3.8.1-openjdk-8-slim AS build
+FROM maven:3.8.4-eclipse-temurin-8 AS build
 WORKDIR /app
 
 # Copy pom.xml and download dependencies (cached layer)
@@ -11,7 +11,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Run stage
-FROM openjdk:8-jre-slim
+FROM eclipse-temurin:8-jre
 WORKDIR /app
 
 # Copy the built jar from the build stage

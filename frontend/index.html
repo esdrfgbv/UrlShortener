@@ -3,43 +3,53 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>URL Shortener</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NanoURL | Premium URL Shortener</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
     <div class="container">
-        <h1>URL Shortener</h1>
+        <h1>NanoURL</h1>
+        <p class="subtitle">Fast, secure, and permanent short links.</p>
 
-        <input type="text" id="longUrl" placeholder="Enter your long URL">
+        <div class="input-group">
+            <label class="label" for="longUrl">Destination URL</label>
+            <input type="text" id="longUrl" placeholder="https://example.com/very-long-link">
+        </div>
 
-        <label class="label">Choose Expiration Date & Time</label>
-        <input type="datetime-local" id="expiry">
+        <div class="input-group">
+            <label class="label" for="expiry">Link Expiration</label>
+            <input type="datetime-local" id="expiry">
+        </div>
 
-        <button onclick="shorten()">Generate Short Link</button>
+        <button onclick="shorten()">Create Short Link</button>
 
-        <div class="result" id="resultBox">
-            <p>Your link will appear here</p>
+        <div class="result-area" id="resultBox">
+            <!-- Results will appear here -->
+            <p style="color: var(--text-muted); font-size: 0.875rem;">Your shortened link will appear here</p>
         </div>
     </div>
 
     <script>
         async function shorten() {
-
             const longUrl = document.getElementById("longUrl").value.trim();
             const expiry = document.getElementById("expiry").value;
             const resultBox = document.getElementById("resultBox");
 
             if (longUrl === "") {
-                resultBox.innerHTML = "<p style='color:red;'>Enter a URL</p>";
+                resultBox.innerHTML = "<p class='error-msg'>Please enter a destination URL</p>";
                 return;
             }
 
             if (expiry === "") {
-                resultBox.innerHTML = "<p style='color:red;'>Select expiration date</p>";
+                resultBox.innerHTML = "<p class='error-msg'>Please select an expiration date</p>";
                 return;
             }
+
+            // Show loading state
+            resultBox.innerHTML = "<p style='color: var(--text-muted);'>Generating...</p>";
 
             try {
                 const response = await fetch("http://localhost:8080/generate", {
@@ -55,24 +65,23 @@
 
                 const data = await response.json();
 
-                console.log(data);
-
                 if (data.shortLink) {
                     const fullUrl = "http://localhost:8080/" + data.shortLink;
+                    const date = new Date(data.expirationDate).toLocaleString();
 
                     resultBox.innerHTML = `
-                <h3>Shortened URL</h3>
-                <a href="${fullUrl}" target="_blank">${fullUrl}</a>
-                <p>Expires on: ${data.expirationDate}</p>
-            `;
+                        <div class="result-card">
+                            <h3>Shortened URL</h3>
+                            <a href="${fullUrl}" target="_blank">${fullUrl}</a>
+                            <p>Active until: ${date}</p>
+                        </div>
+                    `;
                 } else {
-                    resultBox.innerHTML =
-                        `<p style="color:red;">${data.error}</p>`;
+                    resultBox.innerHTML = `<p class='error-msg'>${data.error || 'Failed to create link'}</p>`;
                 }
 
             } catch (err) {
-                resultBox.innerHTML =
-                    "<p style='color:red;'>Server not reachable</p>";
+                resultBox.innerHTML = "<p class='error-msg'>Server connection failed. Is the backend running?</p>";
             }
         }
     </script>
